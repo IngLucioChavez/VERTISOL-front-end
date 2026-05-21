@@ -28,8 +28,6 @@ export default function ProductDetailPage() {
         return <div>Producto no encontrado</div>;
     }
 
-    // return <></>
-
     return (
         <Card className="max-w-xl mx-auto p-6">
             <Image

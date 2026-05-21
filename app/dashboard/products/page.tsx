@@ -13,19 +13,11 @@ import {
 } from "@/components/ui/table";
 
 import { Product } from "@/context/types";
-
 import { useEffect, useMemo, useState } from "react";
-
 import { api } from "@/lib/axios";
-
 import { BACKEND_ROUTES } from "@/API-EndPoints/back";
-
-import { ResponseObtenerProductos } from "@/app/interfaces/responseObtenerProductos";
-
 import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
 
 import {
@@ -37,13 +29,10 @@ import {
 export default function ProductsPage() {
 
     const { state, dispatch } = useApp();
-
     const [search, setSearch] =
         useState("");
-
     const [currentPage, setCurrentPage] =
         useState(1);
-
     const itemsPerPage = 5;
 
     useEffect(() => {
@@ -51,26 +40,20 @@ export default function ProductsPage() {
         api.get(
             BACKEND_ROUTES.GETPRODUCTOS
         )
-
             .then((response) => {
-
                 dispatch({
                     type: "ADD_PRODUCTS",
                     payload:
                         response.data.response
                 });
-
             })
-
             .catch(() => {
-
                 toast.error(
                     "Error al obtener productos",
                     {
                         position: "top-center"
                     }
                 );
-
             });
 
     }, []);
@@ -78,18 +61,14 @@ export default function ProductsPage() {
     // filtro búsqueda
     const filteredProducts =
         useMemo(() => {
-
             return state.products.filter(
                 (product: Product) =>
-
                     product.nombre
                         .toLowerCase()
                         .includes(
                             search.toLowerCase()
                         )
-
             );
-
         }, [
             state.products,
             search
