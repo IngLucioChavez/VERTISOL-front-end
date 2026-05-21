@@ -23,10 +23,12 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [correo, setCorreo] = useState("");
     const [password, setPassword] = useState("");
+    const [hasError, setHasError] = useState(false);
 
 
     const login = async () => {
 
+        // validaciones simples de campos login
         if (correo === "" || password === "") {
             toast.error(
                 "Todos los campos son obligatorios", {
@@ -41,17 +43,26 @@ export default function LoginPage() {
             return
         }
 
-        const response = await api.post(
-            BACKEND_ROUTES.LOGIN,
-            {
-                correo,
-                password,
-            }
-        );
+        try {
+            // comunicación a ruta /api/login donde NEXT JS interceptará la petición
+            // y en el interceptor se llama a la ruta real del back
+            const response = await api.post(
+                BACKEND_ROUTES.LOGIN,
+                { correo, password }
+            );
 
-        const data = response.data;
+            console.log(response.data)
 
-        console.log({ data })
+        } catch (error: any) {
+
+            toast.error(
+                error?.response?.data?.message ||
+                "Error al iniciar sesión", {
+                position: "top-center"
+            });
+
+        }
+
         return
 
         const fakeUser = {
