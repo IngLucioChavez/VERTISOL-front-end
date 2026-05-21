@@ -8,14 +8,38 @@ import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useApp } from "@/context/AppContext";
 
 export default function LoginPage() {
     const router = useRouter();
+    const { dispatch } = useApp();
 
     const [showPassword, setShowPassword] =
         useState(false);
 
     const login = () => {
+        const fakeUser = {
+            id: "1",
+            name: "Lucio",
+            email: "lucio@gmail.com",
+        };
+
+        // guardar en context
+        dispatch({
+            type: "LOGIN",
+            payload: fakeUser,
+        });
+
+        // guardar cookie auth
+        document.cookie =
+            "token=fintech_token; path=/";
+
+        // guardar user persistente
+        localStorage.setItem(
+            "user",
+            JSON.stringify(fakeUser)
+        );
+
         router.push("/dashboard");
     };
 

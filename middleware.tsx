@@ -1,18 +1,20 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(
     request: NextRequest
 ) {
-    const pathname = request.nextUrl.pathname;
+    const token =
+        request.cookies.get("token");
+
+    const isAuthenticated = !!token;
+
+    const pathname =
+        request.nextUrl.pathname;
 
     // rutas públicas
     const publicRoutes = ["/login"];
 
-    // simulación auth
-    const isAuthenticated = true;
-
-    // proteger dashboard
+    // dashboard protegido
     if (
         pathname.startsWith("/dashboard") &&
         !isAuthenticated
@@ -22,7 +24,7 @@ export function middleware(
         );
     }
 
-    // evitar entrar a login si ya está autenticado
+    // evitar regresar a login
     if (
         pathname === "/login" &&
         isAuthenticated

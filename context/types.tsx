@@ -1,3 +1,9 @@
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+}
+
 export interface Product {
     id: string;
     name: string;
@@ -14,10 +20,26 @@ export interface Sale {
 }
 
 export interface AppState {
+    user: User | null;
+    isAuthenticated: boolean;
+
     products: Product[];
     sales: Sale[];
 }
 
 export type Action =
-    | { type: "ADD_PRODUCT"; payload: Product }
-    | { type: "ADD_SALE"; payload: Sale };
+    | {
+        type: "LOGIN";
+        payload: User;
+    }
+    | {
+        type: "LOGOUT";
+    }
+    | {
+        type: "ADD_PRODUCT";
+        payload: Product;
+    }
+    | {
+        type: "ADD_SALE";
+        payload: Sale;
+    };

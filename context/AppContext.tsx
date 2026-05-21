@@ -5,19 +5,12 @@ import {
     useContext,
     useReducer,
     ReactNode,
+    useEffect,
 } from "react";
 
 import { reducer, initialState } from "./reducer";
-import { Action, AppState } from "./types";
 
-interface ContextProps {
-    state: AppState;
-    dispatch: React.Dispatch<Action>;
-}
-
-const AppContext = createContext<ContextProps | undefined>(
-    undefined
-);
+const AppContext = createContext<any>(null);
 
 export const AppProvider = ({
     children,
@@ -29,19 +22,26 @@ export const AppProvider = ({
         initialState
     );
 
+    useEffect(() => {
+        const storedUser =
+            localStorage.getItem("user");
+
+        if (storedUser) {
+            dispatch({
+                type: "LOGIN",
+                payload: JSON.parse(storedUser),
+            });
+        }
+    }, []);
+
     return (
-        <AppContext.Provider value={{ state, dispatch }}>
+        <AppContext.Provider
+            value={{ state, dispatch }}
+        >
             {children}
         </AppContext.Provider>
     );
 };
 
-export const useApp = () => {
-    const context = useContext(AppContext);
-
-    if (!context) {
-        throw new Error("useApp debe usarse dentro del provider");
-    }
-
-    return context;
-};
+export const useApp = () =>
+    useContext(AppContext);

@@ -1,6 +1,9 @@
 import { Action, AppState } from "./types";
 
 export const initialState: AppState = {
+    user: null,
+    isAuthenticated: false,
+
     products: [
         {
             id: "1",
@@ -10,15 +13,8 @@ export const initialState: AppState = {
                 "https://images.unsplash.com/photo-1695048133142-1a20484d2569",
             description: "Smartphone premium Apple",
         },
-        {
-            id: "2",
-            name: "MacBook Pro",
-            price: 52000,
-            image:
-                "https://images.unsplash.com/photo-1517336714739-489689fd1ca8",
-            description: "Laptop profesional",
-        },
     ],
+
     sales: [],
 };
 
@@ -27,16 +23,36 @@ export const reducer = (
     action: Action
 ): AppState => {
     switch (action.type) {
+        case "LOGIN":
+            return {
+                ...state,
+                user: action.payload,
+                isAuthenticated: true,
+            };
+
+        case "LOGOUT":
+            return {
+                ...state,
+                user: null,
+                isAuthenticated: false,
+            };
+
         case "ADD_PRODUCT":
             return {
                 ...state,
-                products: [...state.products, action.payload],
+                products: [
+                    ...state.products,
+                    action.payload,
+                ],
             };
 
         case "ADD_SALE":
             return {
                 ...state,
-                sales: [...state.sales, action.payload],
+                sales: [
+                    ...state.sales,
+                    action.payload,
+                ],
             };
 
         default:
