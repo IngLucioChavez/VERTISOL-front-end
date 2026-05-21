@@ -4,15 +4,7 @@ export const initialState: AppState = {
     user: null,
     isAuthenticated: false,
 
-    products: [
-        {
-            id: "1",
-            name: "iPhone 15",
-            price: 24000,
-            image: "https://images.pexels.com/photos/6301963/pexels-photo-6301963.jpeg",
-            description: "Smartphone premium Apple",
-        },
-    ],
+    products: [],
 
     sales: [],
 };
@@ -43,6 +35,12 @@ export const reducer = (
                     ...state.products,
                     action.payload,
                 ],
+            };
+
+        case "ADD_PRODUCTS":
+            return {
+                ...state,
+                products: action.payload
             };
 
         case "ADD_SALE":

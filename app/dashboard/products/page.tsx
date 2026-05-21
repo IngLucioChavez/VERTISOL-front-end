@@ -10,9 +10,32 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Product } from "@/context/types";
+import { useEffect } from "react";
+import { api } from "@/lib/axios";
+import { BACKEND_ROUTES } from "@/API-EndPoints/back";
+import { ResponseObtenerProductos } from "@/app/interfaces/responseObtenerProductos";
+import { toast } from "sonner";
 
 export default function ProductsPage() {
-    const { state } = useApp();
+    const { state, dispatch } = useApp();
+
+    useEffect(() => {
+
+        const response: Promise<ResponseObtenerProductos | void> = api.get(BACKEND_ROUTES.GETPRODUCTOS)
+            .then((response) => {
+                dispatch({
+                    type: "ADD_PRODUCTS",
+                    payload: response.data.response
+                });
+            }).catch((erro) => {
+                toast.error(
+                    "Error al obtener productos", {
+                    position: "top-center"
+                });
+            });
+
+    }, [])
 
     return (
         <div className="overflow-auto">
@@ -23,25 +46,32 @@ export default function ProductsPage() {
             <Table>
                 <TableHeader>
                     <TableRow>
+                        <TableHead>ID</TableHead>
                         <TableHead>Nombre</TableHead>
+                        <TableHead>Descripción</TableHead>
                         <TableHead>Precio</TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {state.products.map((product) => (
-                        <TableRow key={product.id}>
+                    {state.products.map((product: Product) => (
+                        <TableRow key={product.id_producto}>
+                            <TableCell>
+                                {product.id_producto}
+                            </TableCell>
                             <TableCell>
                                 <Link
                                     className="text-red-600 font-semibold"
-                                    href={`/dashboard/products/${product.id}`}
+                                    href={`/dashboard/products/${product.id_producto}`}
                                 >
-                                    {product.name}
+                                    {product.nombre}
                                 </Link>
                             </TableCell>
-
                             <TableCell>
-                                ${product.price}
+                                {product.descripcion}
+                            </TableCell>
+                            <TableCell>
+                                ${product.precio}
                             </TableCell>
                         </TableRow>
                     ))}

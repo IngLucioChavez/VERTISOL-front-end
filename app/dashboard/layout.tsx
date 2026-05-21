@@ -8,7 +8,6 @@ export default function DashboardLayout({
     return (
         <div>
             <Navbar />
-
             <main className="p-6">{children}</main>
         </div>
     );

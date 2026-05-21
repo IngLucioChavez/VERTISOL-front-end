@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Eye, EyeOff, User } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -58,13 +58,13 @@ export default function LoginPage() {
                 type: "LOGIN",
                 payload: {
                     id: response.data.user.id,
-                    name: response.data.user.name,
+                    name: response.data.user.nombre,
                     email: response.data.user.email,
                     token: response.data.token,
                 },
             });
 
-            // guardar cookie auth
+            // guardar cookie auth la cual utiliza el middlware que valida las rutas 
             document.cookie = `token=${response.data.token}; path=/`;
 
             // guardar user persistente
@@ -99,7 +99,7 @@ export default function LoginPage() {
             <div className="absolute w-56 h-56 bg-white/30 rounded-full top-10 right-10 blur-2xl" />
 
             {/* Card Login */}
-            <Card className="relative z-10 w-full max-w-md border-none bg-white/20 backdrop-blur-xl shadow-2xl rounded-3xl p-8">
+            <Card className="relative z-10 w-full max-w-md border-none bg-white/15 backdrop-blur-xl shadow-2xl rounded-3xl p-8">
 
                 {/* Header */}
                 <div className="text-center mb-8">

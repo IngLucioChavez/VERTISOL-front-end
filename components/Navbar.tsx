@@ -10,6 +10,8 @@ export const Navbar = () => {
 
     const { dispatch, state } = useApp();
 
+    console.log(state)
+
     const logout = () => {
         dispatch({
             type: "LOGOUT",
@@ -17,8 +19,7 @@ export const Navbar = () => {
 
         localStorage.removeItem("user");
 
-        document.cookie =
-            "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 
         router.push("/login");
     };
@@ -54,7 +55,7 @@ export const Navbar = () => {
                 <div className="flex items-center gap-4">
 
                     <span>
-                        {state.user?.name}
+                        {state.user?.nombre}
                     </span>
 
                     <button

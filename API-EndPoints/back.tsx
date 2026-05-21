@@ -1,4 +1,5 @@
 export const BACKEND_ROUTES = {
     LOGIN: "/login",
-    LOGOUT: "/logout"
+    LOGOUT: "/logout",
+    GETPRODUCTOS: "/obtenerProductos",
 };

@@ -1,6 +1,6 @@
 export interface User {
     id: string;
-    name: string;
+    nombre: string;
     email: string;
     token: string;
     created_at?: Date;
@@ -8,11 +8,14 @@ export interface User {
 }
 
 export interface Product {
-    id: string;
-    name: string;
-    price: number;
+    id_producto: number;
+    nombre: string;
+    precio: number;
     image: string;
-    description: string;
+    descripcion: string;
+    estatus?: number;
+    created_at?: null;
+    updated_at?: null;
 }
 
 export interface Sale {
@@ -41,6 +44,10 @@ export type Action =
     | {
         type: "ADD_PRODUCT";
         payload: Product;
+    }
+    | {
+        type: "ADD_PRODUCTS";
+        payload: Product[];
     }
     | {
         type: "ADD_SALE";
