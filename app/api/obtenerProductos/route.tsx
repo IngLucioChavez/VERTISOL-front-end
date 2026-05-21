@@ -40,3 +40,48 @@ export const GET = async (
 
     }
 }
+
+export const POST = async (
+    request: Request
+) => {
+    try {
+
+
+        const body = await request.json();
+
+        // return NextResponse.json(
+        //     body
+        // );
+
+        const response = await fetch(
+            `${process.env.API_URL}/obtenerProductos/${body.id_producto}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }
+        );
+
+        const data = await response.json();
+
+        return NextResponse.json(
+            data,
+            {
+                status: response.status,
+            }
+        );
+
+    } catch (error) {
+
+        return NextResponse.json(
+            {
+                message: "Error interno del servidor"
+            },
+            {
+                status: 500,
+            }
+        );
+
+    }
+}
