@@ -65,8 +65,7 @@ export default function LoginPage() {
             });
 
             // guardar cookie auth
-            document.cookie =
-                `token=${response.data.token}; path=/`;
+            document.cookie = `token=${response.data.token}; path=/`;
 
             // guardar user persistente
             localStorage.setItem(
@@ -90,14 +89,14 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-red-700 via-red-600 to-red-500 flex items-center justify-center px-4">
+        <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-red-700 via-red-800 to-red-950 flex items-center justify-center px-4">
 
             {/* Círculos decorativos */}
-            <div className="absolute w-72 h-72 bg-white/10 rounded-full -top-20 -left-20 blur-2xl" />
-
-            <div className="absolute w-96 h-96 bg-white/10 rounded-full bottom-0 right-0 blur-3xl" />
-
-            <div className="absolute w-56 h-56 bg-white/10 rounded-full top-1/2 left-1/3 blur-2xl" />
+            <div className="absolute w-72 h-72 bg-white/30 rounded-full -top-20 -left-20 blur-2xl" />
+            <div className="absolute w-72 h-72 bg-white/30 rounded-full top-50 left-20 blur-2xl" />
+            <div className="absolute w-96 h-96 bg-white/25 rounded-full bottom-0 right-50 blur-3xl" />
+            <div className="absolute w-56 h-56 bg-white/30 rounded-full top-1/2 left-1/3 blur-2xl" />
+            <div className="absolute w-56 h-56 bg-white/30 rounded-full top-10 right-10 blur-2xl" />
 
             {/* Card Login */}
             <Card className="relative z-10 w-full max-w-md border-none bg-white/20 backdrop-blur-xl shadow-2xl rounded-3xl p-8">

@@ -23,8 +23,7 @@ export const AppProvider = ({
     );
 
     useEffect(() => {
-        const storedUser =
-            localStorage.getItem("user");
+        const storedUser = localStorage.getItem("user");
 
         if (storedUser) {
             dispatch({
