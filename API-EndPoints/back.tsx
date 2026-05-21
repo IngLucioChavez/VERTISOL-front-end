@@ -4,4 +4,5 @@ export const BACKEND_ROUTES = {
     GETPRODUCTOS: "/obtenerProductos",
     REGISTRARPRODUCTO: "/registrarProducto",
     REGISTRARVENTA: "/registrarVenta",
+    OBTENERVENTAS: "/obtenerVentas",
 };
