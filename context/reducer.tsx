@@ -9,8 +9,7 @@ export const initialState: AppState = {
             id: "1",
             name: "iPhone 15",
             price: 24000,
-            image:
-                "https://images.unsplash.com/photo-1695048133142-1a20484d2569",
+            image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569",
             description: "Smartphone premium Apple",
         },
     ],

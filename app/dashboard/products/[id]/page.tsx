@@ -4,13 +4,14 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useApp } from "@/context/AppContext";
 import { Card } from "@/components/ui/card";
+import { Product } from "@/context/types";
 
 export default function ProductDetailPage() {
     const params = useParams();
     const { state } = useApp();
 
     const product = state.products.find(
-        (p) => p.id === params.id
+        (p: Product) => p.id === params.id
     );
 
     if (!product) {
