@@ -15,7 +15,10 @@ export const POST = async (
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(body),
+                body: JSON.stringify({
+                    email: body.correo,
+                    password: body.password
+                }),
             }
         );
 

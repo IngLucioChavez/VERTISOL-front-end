@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -15,6 +15,8 @@ import { api } from "@/lib/axios";
 import {
     BACKEND_ROUTES
 } from "@/API-EndPoints/back";
+import { AxiosResponse } from "axios";
+import { ResponseLogin } from "../interfaces/responseLogin";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -23,7 +25,6 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [correo, setCorreo] = useState("");
     const [password, setPassword] = useState("");
-    const [hasError, setHasError] = useState(false);
 
 
     const login = async () => {
@@ -46,12 +47,35 @@ export default function LoginPage() {
         try {
             // comunicación a ruta /api/login donde NEXT JS interceptará la petición
             // y en el interceptor se llama a la ruta real del back
-            const response = await api.post(
+            const response: AxiosResponse<ResponseLogin> = await api.post(
                 BACKEND_ROUTES.LOGIN,
                 { correo, password }
             );
 
-            console.log(response.data)
+
+            // guardar en context
+            dispatch({
+                type: "LOGIN",
+                payload: {
+                    id: response.data.user.id,
+                    name: response.data.user.name,
+                    email: response.data.user.email,
+                    token: response.data.token,
+                },
+            });
+
+            // guardar cookie auth
+            document.cookie =
+                `token=${response.data.token}; path=/`;
+
+            // guardar user persistente
+            localStorage.setItem(
+                "user",
+                JSON.stringify(response.data.user)
+            );
+
+            // redireccionando a dashboard
+            router.push("/dashboard");
 
         } catch (error: any) {
 
@@ -63,31 +87,6 @@ export default function LoginPage() {
 
         }
 
-        return
-
-        const fakeUser = {
-            id: "1",
-            name: "Lucio",
-            email: "lucio@gmail.com",
-        };
-
-        // guardar en context
-        dispatch({
-            type: "LOGIN",
-            payload: fakeUser,
-        });
-
-        // guardar cookie auth
-        document.cookie =
-            "token=fintech_token; path=/";
-
-        // guardar user persistente
-        localStorage.setItem(
-            "user",
-            JSON.stringify(fakeUser)
-        );
-
-        router.push("/dashboard");
     };
 
     return (
