@@ -9,15 +9,29 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useApp } from "@/context/AppContext";
+import { toast } from "sonner";
 
 export default function LoginPage() {
     const router = useRouter();
     const { dispatch } = useApp();
 
-    const [showPassword, setShowPassword] =
-        useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [correo, setCorreo] = useState("");
+    const [password, setPassword] = useState("");
+
 
     const login = () => {
+
+        if (correo === "" || password === "") {
+            toast.error(
+                "Todos los campos son obligatorios", {
+                position: "top-center"
+            });
+        }
+
+
+        return
+
         const fakeUser = {
             id: "1",
             name: "Lucio",
@@ -78,6 +92,7 @@ export default function LoginPage() {
                         <Input
                             placeholder="correo@empresa.com"
                             className="bg-white/80 border-none h-12 rounded-xl"
+                            onKeyUp={(e) => setCorreo(e.currentTarget.value)}
                         />
                     </div>
 
@@ -95,6 +110,7 @@ export default function LoginPage() {
                                 }
                                 placeholder="********"
                                 className="bg-white/80 border-none h-12 rounded-xl pr-12"
+                                onKeyUp={(e) => setPassword(e.currentTarget.value)}
                             />
 
                             <button
