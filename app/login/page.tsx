@@ -10,6 +10,11 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
+import { api } from "@/lib/axios";
+
+import {
+    BACKEND_ROUTES
+} from "@/API-EndPoints/back";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -20,16 +25,33 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
 
 
-    const login = () => {
+    const login = async () => {
 
         if (correo === "" || password === "") {
             toast.error(
                 "Todos los campos son obligatorios", {
                 position: "top-center"
             });
+            return
+        } else if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))) {
+            toast.error(
+                "Correo no valido", {
+                position: "top-center"
+            });
+            return
         }
 
+        const response = await api.post(
+            BACKEND_ROUTES.LOGIN,
+            {
+                correo,
+                password,
+            }
+        );
 
+        const data = response.data;
+
+        console.log({ data })
         return
 
         const fakeUser = {
